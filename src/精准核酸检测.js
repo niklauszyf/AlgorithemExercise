@@ -41,31 +41,32 @@
 
  */
 
-function calcNeedTestCount(nums, tested, union) {
+// function calcChildsCount(nums, tested, union) {
 
- if(!Array.isArray(tested) || !Array.isArray(union) 
- || nums!==union.length || nums.length > union.length) return
-  let sum = new Array(5).fill(0)
- if(tested.length === union.length) sum=nums
-  for(let i=0;i<union.length;i++){
-    let u = union[i]
-    for(let j=0;j<tested.length;j++) {
-      let index = tested[j]
-      if(u[index]===1 && sum[i]!==1 && i!==index) {
-        sum[i] = 1
-      }
-    }
+//  if(!Array.isArray(tested) || !Array.isArray(union) 
+//  || nums!==union.length || nums.length > union.length) return
+//   let sum = new Array(5).fill(0)
+//  if(tested.length === union.length) sum=nums
+//   for(let i=0;i<union.length;i++){
+//     let u = union[i]
+//     for(let j=0;j<tested.length;j++) {
+//       let index = tested[j]
+//       if(u[index]===1 && sum[i]!==1 && i!==index) {
+//         sum[i] = 1
+//       }
+//     }
 
-    for(let s=0;s<sum.length;s++) {
-      if(tested.includes(s) || tested.includes(i)||sum[s]===0 || s===i) continue
-      if(u[s]===1) sum[i] = 1
-    }
-    if(sum.filter(s=>s===1).length >= nums - tested.length) break
-  }
+//     for(let s=0;s<sum.length;s++) {
+//       if(tested.includes(s) || tested.includes(i)||sum[s]===0 || s===i) continue
+//       if(u[s]===1) sum[i] = 1
+//     }
+//     if(sum.filter(s=>s===1).length >= nums - tested.length) break
+//   }
 
 
 
- return sum.filter(s=>s===1).length 
-}
+//  return sum.filter(s=>s===1).length 
+// }
 
-console.log(calcNeedTestCount(5, [1, 2], [[1,1,0,1,0],[1,1,0,0,0],[0,0,1,0,1],[1,0,0,1,0],[0,0,1,0,1]]))
+
+console.log(calcChildsCount(5, [1, 2], [[1,1,0,1,0],[1,1,0,0,0],[0,0,1,0,1],[1,0,0,1,0],[0,0,1,0,1]]))
