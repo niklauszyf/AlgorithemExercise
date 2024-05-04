@@ -62,3 +62,74 @@
 
 // 第五条指令，申请10字节，0~9地址内存空间足够，返回首地址0
 
+
+class Pool {
+  static REQUEST = 'REQUEST'
+  static RELEASE = 'RELEASE'
+  static MAX = 100
+  constructor([num, ...params]) {
+    this.num = num
+    this.actions = params
+    this.map = new Map()
+  }
+
+  test() {
+    for(let i=0; i<this.num;i++){
+      const [action, value] = this.actions[i].split('=')
+      if(action===Pool.REQUEST) {
+        if(value>Pool.MAX || value <=0 ){
+          console.log('error')
+          continue
+        }
+        this.request(+value)
+      } else if(action===Pool.RELEASE){
+        this.remove(+value)
+      } else {
+        console.log('error');
+      }
+    }
+  }
+
+  request(value) {
+    const zero = 0
+    let left = 0
+    if(!this.map.size){
+      this.map.set(zero, value)
+      console.log(left)
+    } else {
+      const headList = [...this.map.keys()].sort((a,b)=>a-b)
+      for(let key of headList){
+        console.log(key - left, key,value,left,'key-left')
+        if(key - left >= value){
+          this.map.set(left, left+value)
+        } else {
+          left = this.map.get(key)
+        }
+      }
+      if(Pool.MAX - left >= value){
+        this.map.set(left, left+value)
+        console.log(left)
+      } else {
+        console.log(-1)
+      }
+    }
+  }
+
+  remove(value) {
+    this.map.delete(value)
+  }
+}
+
+const testArr = [
+  5,
+  "REQUEST=10", //0
+  "REQUEST=20", //10
+  "RELEASE=0", //
+  "REQUEST=20", //30
+  "REQUEST=10", //0
+];
+
+const pool = new Pool(testArr);
+pool.test();
+
+
